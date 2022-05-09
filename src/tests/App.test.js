@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from '../App';
-import renderWithRouter from '../components/renderWithRouter';
+import renderWithRouter from './renderWithRouter';
 
 describe('Teste se a aplicação contém um conjunto fixo de links de navegação', () => {
   it('O primeiro link deve possuir o texto "Home"', () => {

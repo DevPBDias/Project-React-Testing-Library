@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import App from '../App';
-import renderWithRouter from '../components/renderWithRouter';
+import renderWithRouter from './renderWithRouter';
 
 const partOneFirstP = 'This application simulates a Pokédex, a ';
 const partTwoFirstP = 'digital encyclopedia containing all Pokémons';
@@ -35,7 +35,7 @@ describe('Testando o componente "About"', () => {
     const urlImg = 'https://cdn2.bulbagarden.net/upload/thumb/8/86/Gen_I_Pok%C3%A9dex.png/800px-Gen_I_Pok%C3%A9dex.png';
     const logoEl = screen.getByRole('img', { name: 'Pokédex' });
     expect(logoEl).toBeInTheDocument();
-    // para especificar a tag p, usar o selector(name)
+    // usando o toHaveAttribute para poder passar a src(url) da img no teste
     expect(logoEl).toHaveAttribute('src', urlImg);
   });
 });
