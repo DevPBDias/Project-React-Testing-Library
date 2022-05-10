@@ -17,7 +17,7 @@ describe('Testando o componente "FavoritePokemons"', () => {
   // para favoritar , tem q clicar more details e estar no home
   // na url do pokemon(pokemons/id) , tem q checkar na msg pokemon favorito
   it('Teste se são exibidos todos os cards de pokémons favoritados', () => {
-    const { history, debug } = renderWithRouter(<App />);
+    const { history } = renderWithRouter(<App />);
 
     history.push('/');
     const linkDetails = screen
@@ -28,8 +28,6 @@ describe('Testando o componente "FavoritePokemons"', () => {
     const checkFavorite = screen.getByRole('checkbox', { checked: false });
     expect(checkFavorite).toBeInTheDocument();
     userEvent.click(checkFavorite);
-    debug();
-    console.log(checkFavorite);
     // expect(checkFavorite).toHaveAttribute('checked', true);
 
     // resolve o 7, raciocinio
