@@ -96,16 +96,20 @@ describe('Testando o componente "Pokemon"', () => {
   it('Teste também se a URL exibida no navegador muda para /pokemon/<id>', () => {
     const { history } = renderWithRouter(<App />);
 
+    const buttonEl = screen.getByTestId('next-pokemon');
+    expect(buttonEl).toBeInTheDocument();
+    userEvent.click(buttonEl);
+
     const linkDetails = screen
       .getByRole('link', { name: /More details/i });
     expect(linkDetails).toBeInTheDocument();
     userEvent.click(linkDetails);
 
     // usei o log para ver onde tava a url e fiz destructuring
-    const urlPikachu = '/pokemons/25';
+    const urlCharmander = '/pokemons/4';
     const { location: { pathname } } = history;
     // console.log(history);
-    expect(pathname).toBe(urlPikachu);
+    expect(pathname).toBe(urlCharmander);
   });
 
   it('Teste se existe um ícone de estrela nos pokémons favoritados', () => {
