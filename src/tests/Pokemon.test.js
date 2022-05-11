@@ -37,21 +37,98 @@ describe('Testando o componente "Pokemon"', () => {
     expect(imgStar).toBeInTheDocument();
     expect(imgStar).toHaveAttribute('src', urlStar);
   });
-  //   it(`Teste se é exibido o próximo pokémon da lista
-  //     quando o botão "Próximo pokémon" é clicado`, () => {
-  //     renderWithRouter(<App />);
 
-  //     const buttonEl = screen.getByRole('button', { name: /Próximo pokémon/i });
-  //     expect(buttonEl).toBeInTheDocument();
-  //     userEvent.click(buttonEl);
-  //     const pikachuName = screen.queryByText('Pikachu', { selector: 'p' });
-  //     expect(pikachuName).not.toBeInTheDocument();
+  it('Teste o link para exibir detalhes do pokémon, deve ter URL /pokemons/<id>', () => {
+    const { history } = renderWithRouter(<App />);
 
-//     const times = 7;
-//     for (let index = 0; index <= times; index += 1) {
-//       userEvent.click(buttonEl);
-//     }
-//     const pikachuName2 = screen.getByText('Pikachu', { selector: 'p' });
-//     expect(pikachuName2).toBeInTheDocument();
-//   });
+    const linkDetails = screen
+      .getByRole('link', { name: /More details/i });
+    expect(linkDetails).toBeInTheDocument();
+    userEvent.click(linkDetails);
+
+    // na tela de detalhes do pikachu
+    const pikachuName = screen.queryByText('Pikachu', { selector: 'p' });
+    expect(pikachuName).toBeInTheDocument();
+    const pikachuDetails = screen
+      .getByRole('heading', { name: /Pikachu Details/i, level: 2 });
+    expect(pikachuDetails).toBeInTheDocument();
+    const pikachuLocations = screen
+      .getByRole('heading', { name: /Game Locations of Pikachu/i, level: 2 });
+    expect(pikachuLocations).toBeInTheDocument();
+
+    // usei o log para ver onde tava a url e fiz destructuring
+    const urlPikachu = '/pokemons/25';
+    const { location: { pathname } } = history;
+    // console.log(history);
+    expect(pathname).toBe(urlPikachu);
+  });
+
+  it('Teste se clicar no link de nav do pokémon, vai para pagina de detalhes.', () => {
+    const { history } = renderWithRouter(<App />);
+
+    const linkDetails = screen
+      .getByRole('link', { name: /More details/i });
+    expect(linkDetails).toBeInTheDocument();
+    userEvent.click(linkDetails);
+
+    // na tela de detalhes do pikachu
+    const pikachuName = screen.queryByText('Pikachu', { selector: 'p' });
+    expect(pikachuName).toBeInTheDocument();
+    const pikachuDetails = screen
+      .getByRole('heading', { name: /Pikachu Details/i, level: 2 });
+    expect(pikachuDetails).toBeInTheDocument();
+    const summary = screen
+      .getByRole('heading', { name: /summary/i, level: 2 });
+    expect(summary).toBeInTheDocument();
+    const pikachuLocations = screen
+      .getByRole('heading', { name: /Game Locations of Pikachu/i, level: 2 });
+    expect(pikachuLocations).toBeInTheDocument();
+    const checkFavorite = screen.getByLabelText(/Pokémon favoritado?/i);
+    expect(checkFavorite).toBeInTheDocument();
+
+    // usei o log para ver onde tava a url e fiz destructuring
+    const urlPikachu = '/pokemons/25';
+    const { location: { pathname } } = history;
+    // console.log(history);
+    expect(pathname).toBe(urlPikachu);
+  });
+
+  it('Teste também se a URL exibida no navegador muda para /pokemon/<id>', () => {
+    const { history } = renderWithRouter(<App />);
+
+    const linkDetails = screen
+      .getByRole('link', { name: /More details/i });
+    expect(linkDetails).toBeInTheDocument();
+    userEvent.click(linkDetails);
+
+    // usei o log para ver onde tava a url e fiz destructuring
+    const urlPikachu = '/pokemons/25';
+    const { location: { pathname } } = history;
+    // console.log(history);
+    expect(pathname).toBe(urlPikachu);
+  });
+
+  it('Teste se existe um ícone de estrela nos pokémons favoritados', () => {
+    renderWithRouter(<App />);
+
+    const moreDetails = screen
+      .getByRole('link', { name: /More details/i });
+    expect(moreDetails).toBeInTheDocument();
+    userEvent.click(moreDetails);
+
+    const urlImg = 'https://cdn2.bulbagarden.net/upload/b/b2/Spr_5b_025_m.png';
+    const imgPikachu = screen.getByRole('img', { name: 'Pikachu sprite' });
+    expect(imgPikachu).toBeInTheDocument();
+    expect(imgPikachu).toHaveAttribute('src', urlImg);
+
+    // quando for favoritado dps que entrar em mais detalhes, icone da estrela
+    const checkFavorite = screen.getByLabelText(/Pokémon favoritado?/i);
+    expect(checkFavorite).toBeInTheDocument();
+
+    const urlStar = '/star-icon.svg';
+    const imgStar = screen
+      .getByRole('img', { name: /pikachu is marked as favorite/i });
+    expect(imgStar).toBeInTheDocument();
+    expect(imgStar).toHaveAttribute('src', urlStar);
+  });
 });
